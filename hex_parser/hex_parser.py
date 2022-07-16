@@ -29,13 +29,6 @@ def main(filename):
 
         while n < len(_bytes): 
             # add 0xff when new addr comes in
-            # if current_addr < hex_addr:
-            #     byte_to_save = '0xff'    #stuff
-            #     byte_list.append(byte_to_save)
-            #     current_addr += 2
-            # else:
-            #     byte_to_save = '0x' + str(_bytes[n:n+2])
-            #     byte_list.append(byte_to_save)
             while current_addr < hex_addr:
                 byte_to_save = '0xff'    #stuff
                 byte_list.append(byte_to_save)
