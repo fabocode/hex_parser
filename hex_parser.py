@@ -18,7 +18,7 @@ def main(filename):
     byte_list = []
     n = 0
     current_addr = 0
-    LIMIT = 3
+    LIMIT = 4
     for i in range(0, LIMIT):
         # save all data related in each hex str
         num_bytes    = read[i][1:3]
@@ -48,9 +48,10 @@ def main(filename):
         an_integer = int(item, 16)
         result_list.append(an_integer)
     
+    print(len(result_list))
     seq = ctypes.c_int * len(result_list)
     arr = seq(*result_list)
-    print("{ ", end='')
+    print("PIC8 HEX: { ", end='')
     for index, x in enumerate(arr):
         # if last element, print a new line
         if index == len(arr)- 1:
