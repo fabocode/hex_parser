@@ -19,17 +19,20 @@ def main(filename):
     n = 0
     current_addr = 0
     LIMIT = 4
+    past_addr = 0
     for i in range(0, LIMIT):
+        if len(read[i]) < 19:
+            continue
         # save all data related in each hex str
         num_bytes    = read[i][1:3]
-        hex_addr = int(read[i][3:7], 16)
+        hex_addr     = int(read[i][3:7], 16)
         record_type  = read[i][7:9]
         checksum     = read[i][-2:]
         _bytes       = read[i][9:-2]
 
         while n < len(_bytes): 
             # add 0xff when new addr comes in
-            while current_addr < hex_addr:
+            while current_addr + past_addr < hex_addr:
                 byte_to_save = '0xff'    #stuff
                 byte_list.append(byte_to_save)
                 current_addr += 2
@@ -37,6 +40,7 @@ def main(filename):
             byte_to_save = '0x' + str(_bytes[n:n+2])
             byte_list.append(byte_to_save)
             n += 2
+        past_addr = hex_addr
         n = 0
         current_addr = 0
         # print(f"addr: {hex_addr} - bytes {_bytes}")
