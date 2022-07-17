@@ -22,7 +22,7 @@ def main(filename):
     for i in range(0, LIMIT):
         # save all data related in each hex str
         num_bytes    = read[i][1:3]
-        hex_addr = int(read[i][3:7])
+        hex_addr = int(read[i][3:7], 16)
         record_type  = read[i][7:9]
         checksum     = read[i][-2:]
         _bytes       = read[i][9:-2]
