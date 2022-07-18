@@ -1,6 +1,7 @@
 import ctypes
 from unittest import result
 
+MAX_ARRAY_SIZE = 43
 
 def main(filename):
     # load the hexfile you have 
@@ -20,33 +21,51 @@ def main(filename):
     current_addr = 0
     LIMIT = 4
     past_addr = 0
-    for i in range(0, LIMIT):
-        if len(read[i]) < 19:
+    next_addr = 0
+    for index, arr in enumerate(range(0, LIMIT)):
+        if len(read[arr]) < 19:
             continue
         # save all data related in each hex str
-        num_bytes    = read[i][1:3]
-        hex_addr     = int(read[i][3:7], 16)
-        record_type  = read[i][7:9]
-        checksum     = read[i][-2:]
-        _bytes       = read[i][9:-2]
+        num_bytes    = read[arr][1:3]
+        hex_addr     = int(read[arr][3:7], 16)
+        record_type  = read[arr][7:9]
+        checksum     = read[arr][-2:]
+        _bytes       = read[arr][9:-2]
 
-        while n < len(_bytes): 
-            # add 0xff when new addr comes in
-            while current_addr + past_addr < hex_addr:
-                byte_to_save = '0xff'    #stuff
+        print(f"arr: {read[arr]} - len: {len(read[arr])}")
+
+        if len(read[arr]) == MAX_ARRAY_SIZE:
+            while n < len(_bytes):                 
+                byte_to_save = '0x' + str(_bytes[n:n+2])
                 byte_list.append(byte_to_save)
-                current_addr += 2
-            
-            byte_to_save = '0x' + str(_bytes[n:n+2])
-            byte_list.append(byte_to_save)
-            n += 2
-        past_addr = hex_addr
-        n = 0
-        current_addr = 0
-        # print(f"addr: {hex_addr} - bytes {_bytes}")
-    
-    # print(byte_list)
+                n += 2
 
+            past_addr = hex_addr
+            n = 0
+
+        elif len(read[arr]) < MAX_ARRAY_SIZE:
+
+            
+            while n < len(_bytes):                 
+                byte_to_save = '0x' + str(_bytes[n:n+2])
+                byte_list.append(byte_to_save)
+                n += 2
+                current_addr += 1
+
+            past_addr = hex_addr
+            n = 0
+
+            next_addr =  int(read[arr+1][3:7], 16)
+            diff_between_addr = int((next_addr - hex_addr) / 2) # calculates the items (0xff) I need to add 
+            print(f"next_addr {next_addr} - hex_addr {hex_addr} - diff {diff_between_addr}")
+            
+            for ff in range(0, diff_between_addr):
+                byte_to_save = '0xff'
+                byte_list.append(byte_to_save)
+
+
+
+    # add each element as hex int inside another array
     result_list = []
     for item in byte_list:
         an_integer = int(item, 16)
