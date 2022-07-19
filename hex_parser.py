@@ -27,14 +27,18 @@ def main(filename):
         _bytes               = arr[9:-2]
         # print(f"num_bytes = {num_bytes}  - hex_addr = {hex_addr} - record_type = {record_type} - checksum = {checksum} - _bytes = {_bytes}")
         # print(f"{_bytes} - {current_addr_hex}")
+
         i = 0
-        while i < len(arr):
-            if arr[i] == ':':         # if the byte is a colon
-                continue        # skip it
-            # byte_list.append(byte)        # add the byte to the list
+        while i < len(_bytes):                 # loop through all bytes in the array
+
+            if _bytes[i] == ':':               # if the byte is a colon
+                i += 1                         # skip the colon
+                continue                       # skip it
+            
             # packet every 2 characters
-            byte_list.append(arr[n:n+2])    # add the byte to the list
-            n += 2
+            byte_list.append(_bytes[i:i+2])    # add the byte to the list
+            i += 2
+        i = 0
     print(byte_list)
     # # add each element as hex int inside another array
     # result_list = []
