@@ -25,6 +25,7 @@ def main(filename):
         record_type          = arr[7:9]
         checksum             = arr[-2:]
         _bytes               = arr[9:-2]
+
         # print(f"num_bytes = {num_bytes}  - hex_addr = {hex_addr} - record_type = {record_type} - checksum = {checksum} - _bytes = {_bytes}")
         # print(f"{_bytes} - {current_addr_hex}")
 
@@ -42,7 +43,7 @@ def main(filename):
     print(byte_list)
 
 
-    
+
     # # add each element as hex int inside another array
     # result_list = []
     # for item in byte_list:
