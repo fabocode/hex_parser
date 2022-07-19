@@ -40,6 +40,9 @@ def main(filename):
             i += 2
         i = 0
     print(byte_list)
+
+
+    
     # # add each element as hex int inside another array
     # result_list = []
     # for item in byte_list:
